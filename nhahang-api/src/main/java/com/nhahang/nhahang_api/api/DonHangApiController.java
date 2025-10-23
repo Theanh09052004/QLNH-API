@@ -44,6 +44,18 @@ public class DonHangApiController {
         return list;
     }
 
+    // ==================== TÌM KIẾM ====================
+    @GetMapping("/search")
+    public List<DonHang> search(@RequestParam("keyword") String keyword) {
+        List<DonHang> list = donHangService.searchByKhachHangOrNhanVien(keyword);
+        list.forEach(dh -> {
+            if (dh.getBan() != null) dh.setBan(ignoreBanRelations(dh.getBan()));
+            if (dh.getBansPhu() != null)
+                dh.setBansPhu(dh.getBansPhu().stream().map(this::ignoreBanRelations).toList());
+        });
+        return list;
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<DonHang> getById(@PathVariable int id) {
         DonHang dh = donHangService.findById(id);
