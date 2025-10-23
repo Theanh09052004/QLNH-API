@@ -55,5 +55,5 @@ public class NhaCungCapApiController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
         service.delete(id);
-    } 
+    }
 }

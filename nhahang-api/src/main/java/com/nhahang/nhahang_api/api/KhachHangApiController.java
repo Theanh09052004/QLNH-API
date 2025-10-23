@@ -3,6 +3,7 @@ package com.nhahang.nhahang_api.api;
 import com.nhahang.nhahang_api.model.KhachHang;
 import com.nhahang.nhahang_api.service.KhachHangService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class KhachHangApiController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public KhachHang add(@RequestBody KhachHang kh) {
         return service.saveAndReturn(kh);
     }
@@ -37,11 +39,13 @@ public class KhachHangApiController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         service.delete(id);
     }
 
     @GetMapping("/search")
+    
     public List<KhachHang> search(@RequestParam String keyword) {
         return service.search(keyword);
     }
